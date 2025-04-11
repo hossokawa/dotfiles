@@ -3,64 +3,72 @@ final_space = true
 pwd = "osc7"
 
 [palette]
-  red = '#E06C75'
+red = '#E06C75'
 
 [transient_prompt]
-  template = '  '
-  foreground = 'magenta'
-  background = 'transparent'
+template = '  '
+foreground = 'magenta'
+background = 'transparent'
 
 [[blocks]]
-  type = 'prompt'
-  alignment = 'left'
-  newline = true
+type = 'prompt'
+alignment = 'left'
+newline = true
 
-  [[blocks.segments]]
-    template = 'root <#ffffff>in</>'
-    foreground = 'p:red'
-    background = 'transparent'
-    type = 'root'
-    style = 'plain'
+[[blocks.segments]]
+template = 'root <#ffffff>in</>'
+foreground = 'p:red'
+background = 'transparent'
+type = 'root'
+style = 'plain'
 
-    [blocks.segments.properties]
-      cache_duration = 'none'
+[blocks.segments.properties]
+cache_duration = 'none'
 
-  [[blocks.segments]]
-    template = '{{ .Path }}'
-    foreground = 'blue'
-    background = 'transparent'
-    type = 'path'
-    style = 'plain'
+[[blocks.segments]]
+template = '{{ .Path }}'
+foreground = 'blue'
+background = 'transparent'
+type = 'path'
+style = 'plain'
 
-    [blocks.segments.properties]
-      cache_duration = 'none'
-      style = 'full'
+[blocks.segments.properties]
+cache_duration = 'none'
+style = 'full'
 
-  [[blocks.segments]]
-    template = ' {{ .HEAD }}{{ if and (.Working.Changed) (.Staging.Changed) }}*{{ end }}<cyan>{{ if gt .Behind 0 }}⇣{{ end }}{{ if gt .Ahead 0 }}⇡{{ end }}</>'
-    foreground = 'magenta'
-    background = 'transparent'
-    type = 'git'
-    style = 'plain'
+[[blocks.segments]]
+template = ' {{ .HEAD }}{{ if and (.Working.Changed) (.Staging.Changed) }}*{{ end }}<cyan>{{ if gt .Behind 0 }}⇣{{ end }}{{ if gt .Ahead 0 }}⇡{{ end }}</>'
+foreground = 'magenta'
+background = 'transparent'
+type = 'git'
+style = 'plain'
 
-    [blocks.segments.properties]
-      branch_icon = ''
-      cache_duration = 'none'
-      commit_icon = '@'
-      fetch_status = true
+[blocks.segments.properties]
+branch_icon = ''
+cache_duration = 'none'
+commit_icon = '@'
+fetch_status = true
 
 [[blocks]]
-  type = 'rprompt'
-  overflow = 'hidden'
+type = 'rprompt'
+overflow = 'hidden'
 
-  [[blocks.segments]]
-    template = '{{ .FormattedMs }}'
-    foreground = 'yellow'
-    background = 'transparent'
-    type = 'executiontime'
-    style = 'plain'
+[[blocks.segments]]
+template = '{{ .FormattedMs }}'
+foreground = 'yellow'
+background = 'transparent'
+type = 'executiontime'
+style = 'plain'
 
-    [blocks.segments.properties]
-      cache_duration = 'none'
-      style = 'round'
-      threshold = 5000
+[blocks.segments.properties]
+cache_duration = 'none'
+style = 'round'
+threshold = 5000
+
+[[blocks.segments]]
+template = '<#f5c242></> <b>{{ .Full }}</b>{{ if .Venv }} | {{ .Venv }}{{ end }} '
+type = 'python'
+style = 'plain'
+
+[blocks.segments.properties]
+cache_duration = 'none'
