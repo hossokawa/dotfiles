@@ -93,6 +93,13 @@ local function tab_switch_keys(key_table, modifier)
 		mods = modifier,
 		action = act.ActivateTab(9),
 	})
+	for i = 1, 9 do
+		table.insert(keys, {
+			key = tostring(i),
+			mods = "CTRL|ALT",
+			action = act.MoveTab(i - 1),
+		})
+	end
 end
 
 tab_switch_keys(keys, "ALT")
