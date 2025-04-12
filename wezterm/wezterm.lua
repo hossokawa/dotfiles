@@ -38,7 +38,7 @@ config.font_size = 11.0
 config.harfbuzz_features = { "calt=0", "clig=0", "liga=0" }
 
 -- Keybinds
-config.leader = { key = "a", mods = "CTRL" }
+config.leader = { key = "b", mods = "CTRL" }
 config.keys = require("keybinds")
 
 config.key_tables = {
