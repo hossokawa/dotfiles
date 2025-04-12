@@ -35,6 +35,7 @@ config.default_prog = { "C:/Program Files/PowerShell/7/pwsh.exe", "-NoLogo" }
 -- Fonts
 config.font = wezterm.font("JetBrainsMono NF")
 config.font_size = 11.0
+config.harfbuzz_features = { "calt=0", "clig=0", "liga=0" }
 
 -- Keybinds
 config.leader = { key = "a", mods = "CTRL" }
