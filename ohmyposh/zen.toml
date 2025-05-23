@@ -54,7 +54,7 @@ type = 'rprompt'
 overflow = 'hidden'
 
 [[blocks.segments]]
-template = '{{ .FormattedMs }}'
+template = '{{ .FormattedMs }} '
 foreground = 'yellow'
 background = 'transparent'
 type = 'executiontime'
