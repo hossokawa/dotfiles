@@ -5,11 +5,13 @@ return {
       vim.list_extend(opts.ensure_installed, {
         "shellcheck",
         "shfmt",
+        -- Golang
         "gopls",
         "gofumpt",
         "goimports",
-        "ruff",
+        -- Python
         "basedpyright",
+        "ruff",
       })
     end,
   },
@@ -17,24 +19,30 @@ return {
     "neovim/nvim-lspconfig",
     opts = {
       inlay_hints = { enabled = false },
+      diagnostics = {
+        virtual_text = false,
+      },
       ---@type lspconfig.options
       servers = {
         basedpyright = {
           settings = {
             basedpyright = {
+              disableOrganizeImports = true,
               analysis = {
-                typeCheckingMode = "standard",
-                autoSearchPaths = true,
-                useLibraryCodeForTypes = true,
+                -- ignore = { "*" },
                 autoImportCompletions = true,
-                diagnosticsMode = "openFilesOnly",
+                autoSearchPaths = true,
+                diagnosticMode = "openFilesOnly",
+                typeCheckingMode = "recommended",
+                useLibraryCodeForTypes = true,
                 diagnosticSeverityOverrides = {
-                  reportUnknownVariableType = false,
-                  reportUnknownMemberType = false,
-                  reportUnknownArgumentType = false,
-                  reportUndefinedVariable = false,
-                  reportUnusedVariable = false,
-                  reportMissingTypeStubs = false,
+                  --   reportUnknownVariableType = false,
+                  --   reportUnknownMemberType = false,
+                  --   reportUnknownArgumentType = false,
+                  --   reportUndefinedVariable = false,
+                  --   reportUnusedImport = false,
+                  --   reportUnusedVariable = false,
+                  reportMissingTypeStubs = "none",
                 },
               },
             },
@@ -93,5 +101,21 @@ return {
         markdown = {},
       },
     },
+  },
+  {
+    "neovim/nvim-lspconfig",
+    opts = function()
+      local keys = require("lazyvim.plugins.lsp.keymaps").get()
+      vim.list_extend(keys, {
+        {
+          "gd",
+          function()
+            require("telescope.builtin").lsp_definitions({ reuse_win = false })
+          end,
+          desc = "Goto Definition",
+          has = "definition",
+        },
+      })
+    end,
   },
 }
