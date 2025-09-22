@@ -11,6 +11,7 @@ end
 config.max_fps = 144
 config.color_scheme = "Tokyo Night Storm"
 config.hide_tab_bar_if_only_one_tab = true
+config.show_tab_index_in_tab_bar = false
 config.hide_mouse_cursor_when_typing = false
 config.inactive_pane_hsb = {
 	brightness = 0.9,
@@ -20,7 +21,7 @@ config.enable_scroll_bar = true
 config.window_padding = {
 	left = 5,
 	right = 0,
-	top = 5,
+	top = 0,
 	bottom = 0,
 }
 
@@ -34,11 +35,11 @@ config.default_prog = { "C:/Program Files/PowerShell/7/pwsh.exe", "-NoLogo" }
 
 -- Fonts
 config.font = wezterm.font("JetBrainsMono NF")
-config.font_size = 11.0
+config.font_size = 12.0
 config.harfbuzz_features = { "calt=0", "clig=0", "liga=0" }
 
 -- Keybinds
-config.leader = { key = "b", mods = "CTRL" }
+config.leader = { key = "Space", mods = "CTRL" }
 config.keys = require("keybinds")
 
 config.key_tables = {
