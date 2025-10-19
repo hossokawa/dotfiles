@@ -27,7 +27,7 @@ p = util.palette_extend({
   blossom = hsl(344, 47, 68),
   purple = hsl(270, 50, 60),
 
-  yellow = hsl(45, 100, 35),
+  yellow = hsl(45, 100, 40),
   yellow100 = hsl(47, 100, 80),
   yellow300 = hsl(45, 100, 50),
   yellow500 = hsl(45, 100, 35),
@@ -86,15 +86,13 @@ local generator = require("zenbones.specs")
 local base_specs = generator.generate(p, bg, generator.get_global_config(colors_name, bg))
 
 -- Optionally extend specs using Lush
-local specs = lush.extends({ base_specs }).with(function()
+  ---@diagnostic disable: undefined-global
+	-- selene: allow(undefined_variable)
+	-- stylua: ignore start
+local specs = lush.extends({ base_specs }).with(function(injected_functions)
+  local sym = injected_functions.sym
   return {
     Normal({ bg = p.bg, fg = p.fg }), -- Normal text
-
-    Constant({ base_specs.Constant, fg = p.violet }),
-    String({ fg = p.sky }),
-    -- Number({ fg = p.rose }),
-    Boolean({ base_specs.Boolean, fg = p.dawn }),
-
     -- ColorColumn    { }, -- Columns set with 'colorcolumn'
     -- Conceal        { }, -- Placeholder characters substituted for concealed text (see 'conceallevel')
     -- Cursor         { }, -- Character under the cursor
@@ -175,17 +173,17 @@ local specs = lush.extends({ base_specs }).with(function()
 
     -- Comment        { }, -- Any comment
 
-    -- Constant       { }, -- (*) Any constant
-    -- String         { }, --   A string constant: "this is a string"
-    -- Character      { }, --   A character constant: 'c', '\n'
-    -- Number         { }, --   A number constant: 234, 0xff
-    -- Boolean        { }, --   A boolean constant: TRUE, false
-    -- Float          { }, --   A floating point constant: 2.3e10
+    Constant          { fg = p.violet }, -- (*) Any constant
+    String            { fg = p.sky }, --   A string constant: "this is a string"
+    Character         { fg = p.sky }, --   A character constant: 'c', '\n'
+    Number            { fg = p.sky }, --   A number constant: 234, 0xff
+    Boolean           { fg = p.sky }, --   A boolean constant: TRUE, false
+    Float             { fg = p.sky }, --   A floating point constant: 2.3e10
 
-    -- Identifier     { }, -- (*) Any variable name
+    Identifier        { gui = "" }, -- (*) Any variable name
     -- Function       { }, --   Function name (also: methods for classes)
 
-    -- Statement      { }, -- (*) Any statement
+    Statement         { gui = "" }, -- (*) Any statement
     -- Conditional    { }, --   if, then, else, endif, switch, etc.
     -- Repeat         { }, --   for, do, while, etc.
     -- Label          { }, --   case, default, etc.
@@ -199,12 +197,12 @@ local specs = lush.extends({ base_specs }).with(function()
     -- Macro          { }, --   Same as Define
     -- PreCondit      { }, --   Preprocessor #if, #else, #endif, etc.
 
-    -- Type           { }, -- (*) int, long, char, etc.
+    Type           { fg = p.bg.li(30) }, -- (*) int, long, char, etc.
     -- StorageClass   { }, --   static, register, volatile, etc.
     -- Structure      { }, --   struct, union, enum, etc.
-    -- Typedef        { }, --   A typedef
+    -- Typedef        { fg = p.cyan }, --   A typedef
 
-    -- Special        { }, -- (*) Any special symbol
+    Special           { gui = "" }, -- (*) Any special symbol
     -- SpecialChar    { }, --   Special character in a constant
     -- Tag            { }, --   You can use CTRL-] on this
     -- Delimiter      { }, --   Character that needs attention
@@ -231,14 +229,14 @@ local specs = lush.extends({ base_specs }).with(function()
 
     -- See :h diagnostic-highlights, some groups may not be listed, submit a PR fix to lush-template!
     --
-    DiagnosticError({ fg = p.red }), -- Used as the base highlight group. Other Diagnostic highlights link to this by default (except Underline)
-    DiagnosticWarn({ fg = p.yellow }), -- Used as the base highlight group. Other Diagnostic highlights link to this by default (except Underline)
-    DiagnosticInfo({ fg = p.blue }), -- Used as the base highlight group. Other Diagnostic highlights link to this by default (except Underline)
+    DiagnosticError               { fg = p.red }, -- Used as the base highlight group. Other Diagnostic highlights link to this by default (except Underline)
+    DiagnosticWarn                { fg = p.yellow }, -- Used as the base highlight group. Other Diagnostic highlights link to this by default (except Underline)
+    DiagnosticInfo                { fg = p.blue }, -- Used as the base highlight group. Other Diagnostic highlights link to this by default (except Underline)
     -- DiagnosticHint             { } , -- Used as the base highlight group. Other Diagnostic highlights link to this by default (except Underline)
     -- DiagnosticOk               { } , -- Used as the base highlight group. Other Diagnostic highlights link to this by default (except Underline)
-    DiagnosticVirtualTextError({ fg = p.red }), -- Used for "Error" diagnostic virtual text.
-    DiagnosticVirtualTextWarn({ fg = p.yellow }), -- Used for "Warn" diagnostic virtual text.
-    DiagnosticVirtualTextInfo({ fg = p.blue }), -- Used for "Info" diagnostic virtual text.
+    DiagnosticVirtualTextError    { fg = p.red }, -- Used for "Error" diagnostic virtual text.
+    DiagnosticVirtualTextWarn     { fg = p.yellow }, -- Used for "Warn" diagnostic virtual text.
+    DiagnosticVirtualTextInfo     { fg = p.blue }, -- Used for "Info" diagnostic virtual text.
     -- DiagnosticVirtualTextHint  { } , -- Used for "Hint" diagnostic virtual text.
     -- DiagnosticVirtualTextOk    { } , -- Used for "Ok" diagnostic virtual text.
     -- DiagnosticUnderlineError   { } , -- Used to underline "Error" diagnostics.
@@ -246,14 +244,14 @@ local specs = lush.extends({ base_specs }).with(function()
     -- DiagnosticUnderlineInfo    { } , -- Used to underline "Info" diagnostics.
     -- DiagnosticUnderlineHint    { } , -- Used to underline "Hint" diagnostics.
     -- DiagnosticUnderlineOk      { } , -- Used to underline "Ok" diagnostics.
-    DiagnosticFloatingError({ fg = p.red }), -- Used to color "Error" diagnostic messages in diagnostics float. See |vim.diagnostic.open_float()|
-    DiagnosticFloatingWarn({ fg = p.yellow }), -- Used to color "Warn" diagnostic messages in diagnostics float.
-    DiagnosticFloatingInfo({ fg = p.blue }), -- Used to color "Info" diagnostic messages in diagnostics float.
+    DiagnosticFloatingError       { fg = p.red }, -- Used to color "Error" diagnostic messages in diagnostics float. See |vim.diagnostic.open_float()|
+    DiagnosticFloatingWarn        { fg = p.yellow }, -- Used to color "Warn" diagnostic messages in diagnostics float.
+    DiagnosticFloatingInfo        { fg = p.blue }, -- Used to color "Info" diagnostic messages in diagnostics float.
     -- DiagnosticFloatingHint     { } , -- Used to color "Hint" diagnostic messages in diagnostics float.
     -- DiagnosticFloatingOk       { } , -- Used to color "Ok" diagnostic messages in diagnostics float.
-    DiagnosticSignError({ fg = p.red }), -- Used for "Error" signs in sign column.
-    DiagnosticSignWarn({ fg = p.yellow }), -- Used for "Warn" signs in sign column.
-    DiagnosticSignInfo({ fg = p.blue }), -- Used for "Info" signs in sign column.
+    DiagnosticSignError           { fg = p.red }, -- Used for "Error" signs in sign column.
+    DiagnosticSignWarn            { fg = p.yellow }, -- Used for "Warn" signs in sign column.
+    DiagnosticSignInfo            { fg = p.blue }, -- Used for "Info" signs in sign column.
     -- DiagnosticSignHint         { } , -- Used for "Hint" signs in sign column.
     -- DiagnosticSignOk           { } , -- Used for "Ok" signs in sign column.
 
@@ -295,8 +293,11 @@ local specs = lush.extends({ base_specs }).with(function()
     -- sym"@number"            { }, -- Number
     -- sym"@boolean"           { }, -- Boolean
     -- sym"@float"             { }, -- Float
-    -- sym"@function"          { }, -- Function
-    -- sym"@function.builtin"  { }, -- Special
+    sym"@function"             { fg = p.fg }, -- Function
+    sym"@function.method"      { fg = p.fg }, -- Function
+    sym"@function.method.call" { fg = p.fg }, -- Function
+    sym"@function.builtin"     { fg = p.fg }, -- Special
+    sym"@function.call"        { fg = p.fg }, -- Special
     -- sym"@function.macro"    { }, -- Macro
     -- sym"@parameter"         { }, -- Identifier
     -- sym"@method"            { }, -- Function
@@ -311,7 +312,9 @@ local specs = lush.extends({ base_specs }).with(function()
     -- sym"@exception"         { }, -- Exception
     -- sym"@variable"          { }, -- Identifier
     -- sym"@type"              { }, -- Type
-    -- sym"@type.definition"   { }, -- Typedef
+    sym"@type.builtin"         { fg = p.bg.li(30) },
+    sym"@type.definition"   { fg = p.bg.li(30) }, -- Typedef
+    sym"@type.python"          { fg = p.sky },
     -- sym"@storageclass"      { }, -- StorageClass
     -- sym"@structure"         { }, -- Structure
     -- sym"@namespace"         { }, -- Identifier
@@ -319,6 +322,11 @@ local specs = lush.extends({ base_specs }).with(function()
     -- sym"@preproc"           { }, -- PreProc
     -- sym"@debug"             { }, -- Debug
     -- sym"@tag"               { }, -- Tag
+
+    sym"@lsp.type.function"                  { fg = p.fg },
+    sym"@lsp.type.class.python"              { fg = p.sky },
+    sym"@lsp.type.namespace"                 { fg = p.fg },
+    sym"@lsp.typemod.type.definition.go"     { fg = p.sky },
   }
 end)
 
